@@ -91,8 +91,12 @@ class GestureResult:
 # MediaPipe landmark indices for finger tips
 _FINGER_TIP_IDS = [4, 8, 12, 16, 20]
 
-# Default ML confidence threshold (30 %)
-_DEFAULT_ML_THRESHOLD = 0.30
+# Default ML confidence threshold (70 %)
+_DEFAULT_ML_THRESHOLD = 0.70
+
+# MediaPipe returns these labels when no real gesture is matched.
+# Must be filtered out — they are NOT gesture detections.
+_MEDIAPIPE_NON_GESTURE_LABELS = {"", "None", "none", "Unknown", "unknown"}
 
 
 # ---------------------------------------------------------------------------
@@ -165,15 +169,20 @@ def _run_recognizer(
     Run *recognizer* on *mp_img*.
 
     Returns (gesture_name, confidence, raw_label) for the first gesture
-    whose score ≥ threshold, or None if nothing qualifies.
+    whose score ≥ threshold AND whose label is a real gesture (not MediaPipe's
+    internal 'None' / background class), or None if nothing qualifies.
     """
     result = recognizer.recognize(mp_img)
     if not result.hand_landmarks:
         return None
     for idx in range(len(result.hand_landmarks)):
         top = result.gestures[idx][0]
+        label = top.category_name
+        # Skip MediaPipe's 'no gesture' / background pseudo-labels
+        if label in _MEDIAPIPE_NON_GESTURE_LABELS:
+            continue
         if top.score >= threshold:
-            return (top.category_name, float(top.score), f"ml:{top.category_name}")
+            return (label, float(top.score), f"ml:{label}")
     return None
 
 
