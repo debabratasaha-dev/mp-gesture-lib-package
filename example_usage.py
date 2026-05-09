@@ -1,6 +1,10 @@
 """
 example_usage.py  –  Live webcam demo for gesture_module
 =========================================================
+Demonstrates both usage patterns:
+  Pattern A – zero-config (bundled model, no path needed)
+  Pattern B – custom model (user model checked first, bundled as fallback)
+
 Run:
     python example_usage.py
 
@@ -11,19 +15,19 @@ import cv2
 from gesture_module import GestureDetector
 
 # ── CONFIG ──────────────────────────────────────────────────────────────────
-MODEL_PATH  = "Gesture Calculator/operations.task"   # adjust if needed
-CAMERA_IDX  = 0        # change if your webcam is at a different index
+CAMERA_IDX = 0          # change if your webcam is at a different index
 WIDTH, HEIGHT = 1280, 720
+
+# Pattern A: zero-config — bundled model auto-loaded, no path needed
+detector = GestureDetector()
+
+# Pattern B: custom model — uncomment to use your own .task file
+# User model is checked FIRST; bundled models act as fallback.
+# detector = GestureDetector(model_path="Gesture Calculator/operations.task")
 # ────────────────────────────────────────────────────────────────────────────
 
-def main() -> None:
-    detector = GestureDetector(
-        model_path=MODEL_PATH,
-        num_hands=2,
-        ml_threshold=0.77,
-        draw_landmarks=True,
-    )
 
+def main() -> None:
     cap = cv2.VideoCapture(CAMERA_IDX)
     cap.set(cv2.CAP_PROP_FRAME_WIDTH,  WIDTH)
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, HEIGHT)
@@ -37,23 +41,23 @@ def main() -> None:
             print("Camera read failed – exiting.")
             break
 
-        result = detector.detect(frame)   # <── THE ONE CALL
+        result = detector.detect(frame)   # <── the one call you need
 
         # ── overlay ─────────────────────────────────────────────────────────
         display = result.annotated_frame if result.annotated_frame is not None else frame
 
-        label_text  = f"Gesture   : {result.gesture}"
-        conf_text   = f"Confidence: {result.confidence:.1%}"
-        raw_text    = f"Raw label : {result.raw_label}"
+        is_match = result.gesture != "unknown"
+        color = (0, 220, 80) if is_match else (0, 100, 255)
 
+        lines = [
+            f"Gesture   : {result.gesture}",
+            f"Confidence: {result.confidence:.1%}",
+            f"Raw label : {result.raw_label}",
+        ]
         y = 40
-        for line in (label_text, conf_text, raw_text):
-            cv2.putText(
-                display, line, (20, y),
-                cv2.FONT_HERSHEY_DUPLEX, 0.85,
-                (0, 255, 0) if result.gesture != "unknown" else (0, 100, 255),
-                1, cv2.LINE_AA,
-            )
+        for line in lines:
+            cv2.putText(display, line, (20, y),
+                        cv2.FONT_HERSHEY_DUPLEX, 0.85, color, 1, cv2.LINE_AA)
             y += 34
         # ────────────────────────────────────────────────────────────────────
 

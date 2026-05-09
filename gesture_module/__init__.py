@@ -7,13 +7,14 @@ Quick-start
 -----------
     from gesture_module import GestureDetector
 
-    detector = GestureDetector(model_path="path/to/operations.task")
+    # Zero-config: bundled model loads automatically
+    detector = GestureDetector()
+
+    # Or supply your own custom model (checked first, bundled used as fallback)
+    detector = GestureDetector(model_path="my_gestures.task")
 
     result = detector.detect(frame)          # pass a BGR numpy frame
-    print(result.gesture, result.confidence) # e.g.  "plus"  0.93
-
-    # Or use the one-shot helper that opens the webcam for you:
-    # detector.run_demo()
+    print(result.gesture, result.confidence) # e.g. "plus"  0.93
 """
 
 from .detector import GestureDetector, GestureResult
