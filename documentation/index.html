@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="mp_gesture_lib - A plug-and-play Python gesture recognition module.">
+    <title>MP Gesture Lib - Hand Gesture Recognition</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap"
+        rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="background-effects">
+        <div class="glow-orb orb-1"></div>
+        <div class="glow-orb orb-2"></div>
+        <div class="glow-orb orb-3"></div>
+    </div>
+
+    <nav class="navbar">
+        <div class="container nav-container">
+            <div class="logo">
+                <span class="logo-icon">✋</span>
+                MP_Gesture_Lib
+            </div>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#gestures">Gestures</a></li>
+                <li><a href="#usage">Examples</a></li>
+                <li><a href="#api">API</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero container">
+            <div class="hero-content">
+                <h1 class="hero-title">Add Hand Gesture Recognition in <span class="text-gradient">One Line of
+                        Code</span></h1>
+                <p class="hero-subtitle">A reusable, plug-and-play Python module extracting MediaPipe's power into a
+                    dead-simple API. Detect arithmetic gestures, finger counts, and custom actions instantly.</p>
+
+                <div class="hero-actions">
+                    <div class="install-card glass-panel">
+                        <code>pip install mp-gesture-lib</code>
+                        <button class="copy-btn" id="copy-install" aria-label="Copy install command">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <a href="#usage" class="btn btn-primary">View Examples</a>
+                </div>
+            </div>
+
+            <div class="hero-visual glass-panel code-window">
+                <div class="window-header">
+                    <div class="window-dot red"></div>
+                    <div class="window-dot yellow"></div>
+                    <div class="window-dot green"></div>
+                    <span class="window-title">quickstart.py</span>
+                </div>
+                <pre><code class="language-python">from mp_gesture_lib import GestureDetector
+import cv2
+
+# 1. Initialize with bundled models
+detector = GestureDetector()
+cap = cv2.VideoCapture(0)
+
+while cap.isOpened():
+    ok, frame = cap.read()
+    
+    # 2. Detect gesture with one call
+    result = detector.detect(frame)
+    
+    # 3. Use the result!
+    print(f"Detected: {result.gesture}")
+    print(f"Confidence: {result.confidence}")
+    
+    cv2.imshow("Demo", result.annotated_frame)
+    if cv2.waitKey(1) == 27: break</code></pre>
+            </div>
+        </section>
+
+        <section id="about" class="features container">
+            <div class="section-header">
+                <h2>Why mp_gesture_lib?</h2>
+                <p>Designed for developers who want to integrate computer vision without becoming CV experts.</p>
+            </div>
+
+            <div class="feature-grid">
+                <div class="feature-card glass-panel">
+                    <div class="feature-icon">🚀</div>
+                    <h3>Zero Configuration</h3>
+                    <p>No model paths required. Bundled models are auto-discovered and loaded instantly. Just import and
+                        go.</p>
+                </div>
+                <div class="feature-card glass-panel">
+                    <div class="feature-icon">🧠</div>
+                    <h3>Multi-Model Hierarchy</h3>
+                    <p>Combines custom user ML models, bundled fallback models, and geometry-based rules into a single
+                        priority pipeline.</p>
+                </div>
+                <div class="feature-card glass-panel">
+                    <div class="feature-icon">🛠️</div>
+                    <h3>Rule-Based Fallbacks</h3>
+                    <p>Includes built-in geometry rules for advanced gestures (like "plus" and "multiply") and precise
+                        1-10 finger counting.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="gestures" class="gestures-section container">
+            <div class="section-header">
+                <h2>Supported Gestures</h2>
+                <p>The library detects standard numbers and arithmetic operations out-of-the-box.</p>
+            </div>
+
+            <div class="gesture-grid">
+                <!-- Dynamically populated gestures -->
+                <div class="gesture-card glass-panel">
+                    <div class="gesture-image-container">
+                        <img src="Gesture_pictures/plus.png" alt="Plus Gesture" class="gesture-img" loading="lazy">
+                    </div>
+                    <div class="gesture-info">
+                        <h3>Plus</h3>
+                        <span class="badge rule-badge">Rule-based</span>
+                    </div>
+                </div>
+
+                <div class="gesture-card glass-panel">
+                    <div class="gesture-image-container">
+                        <img src="Gesture_pictures/minus.png" alt="Minus Gesture" class="gesture-img" loading="lazy">
+                    </div>
+                    <div class="gesture-info">
+                        <h3>Minus</h3>
+                        <span class="badge ml-badge">ML Model</span>
+                    </div>
+                </div>
+
+                <div class="gesture-card glass-panel">
+                    <div class="gesture-image-container">
+                        <img src="Gesture_pictures/multiply.png" alt="Multiply Gesture" class="gesture-img"
+                            loading="lazy">
+                    </div>
+                    <div class="gesture-info">
+                        <h3>Multiply</h3>
+                        <span class="badge rule-badge">Rule-based</span>
+                    </div>
+                </div>
+
+                <div class="gesture-card glass-panel">
+                    <div class="gesture-image-container">
+                        <img src="Gesture_pictures/divide.png" alt="Divide Gesture" class="gesture-img" loading="lazy">
+                    </div>
+                    <div class="gesture-info">
+                        <h3>Divide</h3>
+                        <span class="badge ml-badge">ML Model</span>
+                    </div>
+                </div>
+
+                <div class="gesture-card glass-panel">
+                    <div class="gesture-image-container">
+                        <img src="Gesture_pictures/equal.png" alt="Equal Gesture" class="gesture-img" loading="lazy">
+                    </div>
+                    <div class="gesture-info">
+                        <h3>Equal</h3>
+                        <span class="badge ml-badge">ML Model</span>
+                    </div>
+                </div>
+
+                <div class="gesture-card glass-panel">
+                    <div class="gesture-image-container">
+                        <img src="Gesture_pictures/clear.png" alt="Clear Gesture" class="gesture-img" loading="lazy">
+                    </div>
+                    <div class="gesture-info">
+                        <h3>Clear</h3>
+                        <span class="badge ml-badge">ML Model</span>
+                    </div>
+                </div>
+
+                <div class="gesture-card glass-panel">
+                    <div class="gesture-image-container">
+                        <img src="Gesture_pictures/0.png" alt="Zero Gesture" class="gesture-img" loading="lazy">
+                    </div>
+                    <div class="gesture-info">
+                        <h3>Zero (0)</h3>
+                        <span class="badge ml-badge">ML Model</span>
+                    </div>
+                </div>
+
+                <div class="gesture-card glass-panel special-card">
+                    <div class="gesture-icon-placeholder">🔢</div>
+                    <div class="gesture-info">
+                        <h3>Numbers 1-10</h3>
+                        <span class="badge rule-badge">Finger Count</span>
+                        <p class="tiny-desc">Detects extended fingers with direction-awareness.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="usage" class="examples-section container">
+            <div class="section-header">
+                <h2>Usage Examples</h2>
+                <p>Flexible patterns for any integration scenario.</p>
+            </div>
+
+            <div class="tabs-container glass-panel">
+                <div class="tabs-header">
+                    <button class="tab-btn active" data-target="tab-minimal">Minimal Config</button>
+                    <button class="tab-btn" data-target="tab-custom">Custom Model</button>
+                    <button class="tab-btn" data-target="tab-rgb">RGB Input</button>
+                </div>
+
+                <div class="tabs-content">
+                    <div class="tab-pane active" id="tab-minimal">
+                        <div class="pane-description">
+                            <p>Uses the bundled auto-discovered models. Perfect for quick starts.</p>
+                        </div>
+                        <div class="code-window">
+                            <div class="window-header">
+                                <span class="window-title">minimal.py</span>
+                            </div>
+                            <pre><code class="language-python">import cv2
+from mp_gesture_lib import GestureDetector
+
+# Automatically loads bundled models
+detector = GestureDetector()
+cap = cv2.VideoCapture(0)
+
+while cap.isOpened():
+    ok, frame = cap.read()
+    result = detector.detect(frame)
+    
+    # "plus" 1.0 / "3" 1.0 / "minus" 0.91
+    print(result.gesture, result.confidence)</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="tab-custom">
+                        <div class="pane-description">
+                            <p>Load your own `.task` file. The custom model is queried first; bundled models act as a
+                                fallback.</p>
+                        </div>
+                        <div class="code-window">
+                            <div class="window-header">
+                                <span class="window-title">custom_model.py</span>
+                            </div>
+                            <pre><code class="language-python">from mp_gesture_lib import GestureDetector
+
+detector = GestureDetector(
+    model_path="my_custom_gestures.task",
+    ml_threshold=0.80,      # stricter confidence requirement
+    draw_landmarks=False,   # faster, skips skeleton drawing
+    num_hands=2             # track up to 2 hands
+)</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="tab-rgb">
+                        <div class="pane-description">
+                            <p>Working with PIL, torchvision, or other libraries that use RGB instead of OpenCV's
+                                default BGR format.</p>
+                        </div>
+                        <div class="code-window">
+                            <div class="window-header">
+                                <span class="window-title">rgb_input.py</span>
+                            </div>
+                            <pre><code class="language-python"># Assuming 'rgb_frame' is a numpy array in RGB format
+# (e.g., from PIL.Image or similar)
+
+result = detector.detect(rgb_frame, input_is_rgb=True)
+
+# The returned annotated_frame will ALSO be in RGB format
+# matching the input format.</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="api" class="api-section container">
+            <div class="section-header">
+                <h2>API Reference</h2>
+                <p>Clean, typed, and predictable interface.</p>
+            </div>
+
+            <div class="api-card glass-panel">
+                <div class="api-header">
+                    <h3>GestureResult <span class="type-hint">Dataclass</span></h3>
+                </div>
+                <div class="api-table-container">
+                    <table class="api-table">
+                        <thead>
+                            <tr>
+                                <th>Field</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>gesture</code></td>
+                                <td><span class="type-badge">str</span></td>
+                                <td>Gesture name (e.g. <code>"plus"</code>, <code>"3"</code>) or <code>"unknown"</code>.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><code>confidence</code></td>
+                                <td><span class="type-badge">float</span></td>
+                                <td>0.0–1.0 (1.0 for rule-based, model score for ML, 0.0 for unknown).</td>
+                            </tr>
+                            <tr>
+                                <td><code>raw_label</code></td>
+                                <td><span class="type-badge">str</span></td>
+                                <td>Internal debug label (e.g. <code>"ml:minus"</code>, <code>"rule:plus"</code>).</td>
+                            </tr>
+                            <tr>
+                                <td><code>annotated_frame</code></td>
+                                <td><span class="type-badge">np.ndarray | None</span></td>
+                                <td>Input frame with hand skeleton drawn (if <code>draw_landmarks=True</code>).</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-left">
+                <div class="logo">
+                    <span class="logo-icon">✋</span>
+                    MP_Gesture_Lib
+                </div>
+                <p>Open-source gesture recognition for Python.</p>
+            </div>
+            <div class="footer-right">
+                <a href="#" class="footer-link">GitHub Repository</a>
+                <a href="#" class="footer-link">PyPI Package</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
