@@ -6,7 +6,7 @@ const footerHTML = `
                 MP_Gesture_Lib
             </div>
             <p>Open-source gesture recognition for Python.</p>
-            <p class="copyright" style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.5rem;">&copy; Debabrata Saha. All rights reserved.</p>
+            <p class="copyright" style="color: var(--text-muted); font-size: 0.85rem; margin-top: 0.5rem;">&copy;2026 Debabrata Saha. All rights reserved.</p>
         </div>
         <div class="footer-right">
             <a href="https://github.com/debabratasaha-dev/mp-gesture-lib-package" class="footer-link">
@@ -38,6 +38,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 setTimeout(() => {
                     copyBtn.innerHTML = originalHTML;
                 }, 2000);
+            });
+        });
+    }
+    // Mobile Menu Toggle
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.querySelector('.nav-links');
+    
+    if (hamburger && navLinks) {
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+        
+        // Close menu on link click
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navLinks.classList.remove('active');
             });
         });
     }
