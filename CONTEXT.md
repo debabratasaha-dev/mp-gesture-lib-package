@@ -192,10 +192,23 @@ Python 3.8–3.12    # mediapipe does NOT support 3.13+
 
 ---
 
-## 12. To-Do / Future Work
+## 12. Documentation & Deployment
 
+The project includes a static, beautifully designed documentation website located in the `documentation/` folder.
+
+- **Design Features**: Dark mode default, glassmorphism UI, code syntax highlighting (PrismJS - VSCode Dark+ style), interactive tabs, and a dedicated searchable gesture directory.
+- **Pages**:
+  - `index.html`: Hero section, features, gesture grid, code examples, API reference.
+  - `gestures.html`: A dedicated search page to filter and find specific gestures or supported operations dynamically.
+- **Deployment**: The website can be directly hosted on GitHub Pages (e.g. `https://debabratasaha-dev.github.io/mp-gesture-lib-package`). The `pyproject.toml` URLs are configured to point to this documentation site.
+
+---
+
+## 13. To-Do / Future Work
+
+- [x] Create project documentation website
+- [x] Configure PyPI metadata and package data in `pyproject.toml`
 - [ ] Publish to PyPI as `mp-gesture-lib`
-- [ ] `pyproject.toml` with `package-data` for `.task` files
 - [ ] Resolve 1-finger vs "minus" conflict by retraining model
 - [ ] Add async/callback mode for streaming pipelines
 - [ ] Unit tests

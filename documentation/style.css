@@ -186,8 +186,12 @@ a:hover {
     font-weight: 500;
 }
 
-.nav-links a:hover {
+.nav-links a:hover, .nav-links a.active-nav {
     color: var(--text-primary);
+}
+
+.nav-links a.active-nav {
+    color: var(--accent-primary);
 }
 
 /* Hero Section */
@@ -643,6 +647,87 @@ footer {
 
 .footer-link:hover {
     color: var(--text-primary);
+}
+
+/* -------------------------------------
+   Search Gestures Page Additions
+   ------------------------------------- */
+
+.page-padding {
+    padding-top: calc(var(--nav-height) + 4rem);
+    min-height: calc(100vh - 120px);
+}
+
+.search-section {
+    max-width: 1000px;
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    margin-bottom: 3rem;
+    gap: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.search-container:focus-within {
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+}
+
+.search-icon {
+    color: var(--text-muted);
+}
+
+.search-container input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    font-size: 1.1rem;
+    outline: none;
+}
+
+.search-container input::placeholder {
+    color: var(--text-muted);
+}
+
+.no-results {
+    text-align: center;
+    padding: 4rem 2rem;
+    margin-top: 2rem;
+    border: 1px dashed var(--border-highlight);
+}
+
+.no-results h3 {
+    margin-bottom: 0.5rem;
+}
+
+.no-results p {
+    margin: 0;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Override Prism.js background to blend with glass panel */
+pre[class*="language-"] {
+    background: transparent !important;
+    margin: 0 !important;
+    padding: 1.5rem !important;
+    border: none !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+}
+
+code[class*="language-"] {
+    text-shadow: none !important;
+    background: transparent !important;
+    font-family: var(--font-mono) !important;
+    font-size: 0.9rem !important;
 }
 
 /* Responsive */

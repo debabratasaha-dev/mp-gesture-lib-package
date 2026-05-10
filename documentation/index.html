@@ -16,6 +16,10 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css">
+
+    <!-- Prism Syntax Highlighting (VSCode Dark+ style) -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism-themes/1.9.0/prism-vsc-dark-plus.min.css"
+        rel="stylesheet" />
 </head>
 
 <body>
@@ -33,7 +37,7 @@
             </div>
             <ul class="nav-links">
                 <li><a href="#about">About</a></li>
-                <li><a href="#gestures">Gestures</a></li>
+                <li><a href="pages/gestures.html">Gestures</a></li>
                 <li><a href="#usage">Examples</a></li>
                 <li><a href="#api">API</a></li>
             </ul>
@@ -94,7 +98,7 @@ while cap.isOpened():
 
         <section id="about" class="features container">
             <div class="section-header">
-                <h2>Why mp_gesture_lib?</h2>
+                <h2>Why MP_Gesture_Lib?</h2>
                 <p>Designed for developers who want to integrate computer vision without becoming CV experts.</p>
             </div>
 
@@ -338,22 +342,10 @@ result = detector.detect(rgb_frame, input_is_rgb=True)
         </section>
     </main>
 
-    <footer>
-        <div class="container footer-content">
-            <div class="footer-left">
-                <div class="logo">
-                    <span class="logo-icon">✋</span>
-                    MP_Gesture_Lib
-                </div>
-                <p>Open-source gesture recognition for Python.</p>
-            </div>
-            <div class="footer-right">
-                <a href="#" class="footer-link">GitHub Repository</a>
-                <a href="#" class="footer-link">PyPI Package</a>
-            </div>
-        </div>
-    </footer>
+    <footer></footer>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
     <script src="script.js"></script>
 </body>
 
