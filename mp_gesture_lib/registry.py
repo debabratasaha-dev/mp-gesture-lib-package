@@ -1,13 +1,13 @@
 """
 registry.py  –  Bundled model discovery
 =========================================
-Scans the ``gesture_module/models/`` directory for all ``*.task`` files
+Scans the ``mp_gesture_lib/models/`` directory for all ``*.task`` files
 using ``importlib.resources`` so paths resolve correctly both during
 local development AND after a ``pip install``.
 
 Adding a new bundled model
 --------------------------
-Drop any ``*.task`` file into ``gesture_module/models/`` — it is picked up
+Drop any ``*.task`` file into ``mp_gesture_lib/models/`` — it is picked up
 automatically on the next import. No code change required.
 """
 
@@ -20,7 +20,7 @@ from importlib import resources
 def get_bundled_model_paths() -> list[str]:
     """
     Return absolute paths to every ``*.task`` file bundled in
-    ``gesture_module/models/``.
+    ``mp_gesture_lib/models/``.
 
     Returns
     -------
@@ -29,7 +29,7 @@ def get_bundled_model_paths() -> list[str]:
         Empty list if the models directory exists but contains no ``.task`` files.
     """
     try:
-        models_pkg = resources.files("gesture_module.models")
+        models_pkg = resources.files("mp_gesture_lib.models")
         paths: list[str] = []
 
         for item in models_pkg.iterdir():
@@ -63,7 +63,7 @@ def get_bundled_model_paths() -> list[str]:
         # If package structure is unexpected, return empty list — caller handles it
         import warnings
         warnings.warn(
-            f"gesture_module: could not discover bundled models: {exc}",
+            f"mp_gesture_lib: could not discover bundled models: {exc}",
             RuntimeWarning,
             stacklevel=2,
         )

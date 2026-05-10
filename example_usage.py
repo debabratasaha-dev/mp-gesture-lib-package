@@ -12,7 +12,7 @@ Press  Q  or  ESC  to quit.
 """
 
 import cv2
-from gesture_module import GestureDetector
+from mp_gesture_lib import GestureDetector
 
 # ── CONFIG ──────────────────────────────────────────────────────────────────
 CAMERA_IDX = 0          # change if your webcam is at a different index
