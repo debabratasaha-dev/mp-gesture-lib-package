@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "mp-gesture-lib" # pip install mp-gesture-lib
+version = "1.0.0"
+description = "Plug-and-play hand gesture recognition module built on MediaPipe and OpenCV"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.8, <3.13"
+keywords = [
+    "mediapipe",
+    "gesture",
+    "hand",
+    "recognition",
+    "computer-vision",
+    "opencv",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Scientific/Engineering :: Image Recognition",
+]
+dependencies = ["mediapipe>=0.10.0", "opencv-python>=4.5.0", "numpy>=1.21.0"]
+
+[project.urls]
+Homepage = "https://debabratasaha-dev.github.io/mp-gesture-lib-package"
+Repository = "https://github.com/debabratasaha-dev/mp-gesture-lib-package"
+"Bug Tracker" = "https://github.com/debabratasaha-dev/mp-gesture-lib-package/issues"
+
+[tool.setuptools.packages.find]
+include = ["mp_gesture_lib*"] # include mp_gesture_lib and all sub-packages
+
+[tool.setuptools.package-data]
+"mp_gesture_lib.models" = ["*.task"] # bundle the .task model files

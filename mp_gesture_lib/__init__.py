@@ -1,11 +1,11 @@
 """
-gesture_module
+mp_gesture_lib
 ==============
 A plug-and-play gesture recognition module built on MediaPipe and OpenCV.
 
 Quick-start
 -----------
-    from gesture_module import GestureDetector
+    from mp_gesture_lib import GestureDetector
 
     # Zero-config: bundled model loads automatically
     detector = GestureDetector()
