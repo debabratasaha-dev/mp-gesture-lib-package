@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "mp-gesture-lib" # pip install mp-gesture-lib
-version = "1.0.1"
+version = "1.0.2"
 description = "Plug-and-play hand gesture recognition module built on MediaPipe and OpenCV"
 readme = "README.md"
 license = { text = "MIT" }

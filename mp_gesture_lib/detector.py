@@ -39,10 +39,6 @@ from typing import Optional
 import cv2
 import mediapipe as mp
 import numpy as np
-from mediapipe.python.solutions import drawing_utils as mp_drawing
-from mediapipe.python.solutions import drawing_styles as mp_drawing_styles
-from mediapipe.python.solutions import hands as mp_hands
-from mediapipe.framework.formats import landmark_pb2
 from mediapipe.tasks import python as mp_python
 from mediapipe.tasks.python import vision
 
@@ -93,12 +89,25 @@ class GestureResult:
 # MediaPipe landmark indices for finger tips
 _FINGER_TIP_IDS = [4, 8, 12, 16, 20]
 
+# Tip landmark indices (for coloring)
+_TIP_IDS = frozenset([4, 8, 12, 16, 20])
+
 # Default ML confidence threshold (70 %)
 _DEFAULT_ML_THRESHOLD = 0.70
 
 # MediaPipe returns these labels when no real gesture is matched.
 # Must be filtered out — they are NOT gesture detections.
 _MEDIAPIPE_NON_GESTURE_LABELS = {"", "None", "none", "Unknown", "unknown"}
+
+# Hand skeleton connections (fixed MediaPipe 21-point topology).
+# Defined here so we have zero dependency on mediapipe.python.solutions.
+_HAND_CONNECTIONS = frozenset([
+    (0, 1), (1, 2), (2, 3), (3, 4),          # thumb
+    (0, 5), (5, 6), (6, 7), (7, 8),           # index
+    (5, 9), (9, 10), (10, 11), (11, 12),      # middle
+    (9, 13), (13, 14), (14, 15), (15, 16),    # ring
+    (0, 17), (13, 17), (17, 18), (18, 19), (19, 20),  # pinky + palm
+])
 
 
 # ---------------------------------------------------------------------------
@@ -132,21 +141,33 @@ def _count_extended_fingers(landmarks, hand_type: str) -> int:
 
 
 def _draw_landmarks(rgb_image: np.ndarray, result) -> np.ndarray:
-    """Draw hand landmarks on *rgb_image* and return annotated copy (RGB)."""
+    """
+    Draw hand landmarks on *rgb_image* using cv2 (pure OpenCV).
+
+    Works on ALL mediapipe versions — no dependency on
+    ``mediapipe.python.solutions`` which was removed in 0.10.22+.
+    """
     annotated = np.copy(rgb_image)
+    h, w = annotated.shape[:2]
+
     for hand_landmarks in result.hand_landmarks:
-        proto = landmark_pb2.NormalizedLandmarkList()
-        proto.landmark.extend([
-            landmark_pb2.NormalizedLandmark(x=lm.x, y=lm.y, z=lm.z)
+        # Convert normalised coords → pixel coords
+        pts = [
+            (int(lm.x * w), int(lm.y * h))
             for lm in hand_landmarks
-        ])
-        mp_drawing.draw_landmarks(
-            annotated,
-            proto,
-            mp_hands.HAND_CONNECTIONS,
-            mp_drawing_styles.get_default_hand_landmarks_style(),
-            mp_drawing_styles.get_default_hand_connections_style(),
-        )
+        ]
+
+        # Draw connections
+        for start_idx, end_idx in _HAND_CONNECTIONS:
+            cv2.line(annotated, pts[start_idx], pts[end_idx],
+                     (200, 200, 200), 2, cv2.LINE_AA)
+
+        # Draw landmark dots (tips = orange, joints = green)
+        for i, pt in enumerate(pts):
+            color = (0, 165, 255) if i in _TIP_IDS else (0, 220, 80)
+            cv2.circle(annotated, pt, 6, color, -1)
+            cv2.circle(annotated, pt, 6, (255, 255, 255), 1, cv2.LINE_AA)
+
     return annotated
 
 

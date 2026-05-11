@@ -20,4 +20,4 @@ Quick-start
 from .detector import GestureDetector, GestureResult
 
 __all__ = ["GestureDetector", "GestureResult"]
-__version__ = "1.0.1"
+__version__ = "1.0.2"
