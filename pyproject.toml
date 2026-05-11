@@ -1,10 +1,10 @@
 [build-system]
 requires = ["setuptools>=68", "wheel"]
-build-backend = "setuptools.backends.legacy:build"
+build-backend = "setuptools.build_meta"
 
 [project]
 name = "mp-gesture-lib" # pip install mp-gesture-lib
-version = "1.0.0"
+version = "1.0.1"
 description = "Plug-and-play hand gesture recognition module built on MediaPipe and OpenCV"
 readme = "README.md"
 license = { text = "MIT" }

@@ -39,7 +39,9 @@ from typing import Optional
 import cv2
 import mediapipe as mp
 import numpy as np
-from mediapipe import solutions
+from mediapipe.python.solutions import drawing_utils as mp_drawing
+from mediapipe.python.solutions import drawing_styles as mp_drawing_styles
+from mediapipe.python.solutions import hands as mp_hands
 from mediapipe.framework.formats import landmark_pb2
 from mediapipe.tasks import python as mp_python
 from mediapipe.tasks.python import vision
@@ -138,12 +140,12 @@ def _draw_landmarks(rgb_image: np.ndarray, result) -> np.ndarray:
             landmark_pb2.NormalizedLandmark(x=lm.x, y=lm.y, z=lm.z)
             for lm in hand_landmarks
         ])
-        solutions.drawing_utils.draw_landmarks(
+        mp_drawing.draw_landmarks(
             annotated,
             proto,
-            solutions.hands.HAND_CONNECTIONS,
-            solutions.drawing_styles.get_default_hand_landmarks_style(),
-            solutions.drawing_styles.get_default_hand_connections_style(),
+            mp_hands.HAND_CONNECTIONS,
+            mp_drawing_styles.get_default_hand_landmarks_style(),
+            mp_drawing_styles.get_default_hand_connections_style(),
         )
     return annotated
 
