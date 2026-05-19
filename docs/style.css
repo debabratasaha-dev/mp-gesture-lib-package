@@ -194,6 +194,24 @@ a:hover {
     color: var(--accent-primary);
 }
 
+.nav-github {
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.nav-github:hover {
+    color: var(--text-primary);
+    transform: scale(1.1);
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
 /* Hero Section */
 .hero {
     min-height: 100vh;
